@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: showks-config
+  namespace: showks-staging
+data:
+  NEW_FEATURE: "true"
+
+---
+
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: showks-portal
+  namespace: showks-staging
+  labels:
+    source: test
+    stack: portal
+    app: showks-portal
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      source: test
+      app: showks-portal
+  template:
+    metadata:
+      labels:
+        source: test
+        app: showks-portal
+    spec:
+      containers:
+      - name: primary
+        image: containerdaysjp/showks-portal
+        ports:
+        - containerPort: 3000
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3000
+        envFrom:
+        - configMapRef:
+            name: spinnaker-demo-config
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: showks-portal
+  namespace: default
+spec:
+  selector:
+    source: test
+    app: spinnaker
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 3000
