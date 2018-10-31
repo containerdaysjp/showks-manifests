@@ -2,7 +2,7 @@ apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
   name: showks-portal
-  namespace: showks-staging
+  namespace: showks-portal
   labels:
     source: test
     stack: portal
@@ -35,7 +35,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: showks-portal
-  namespace: default
+  namespace: showks-portal
 spec:
   selector:
     source: test
