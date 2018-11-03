@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "showks-webapp.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "showks-webapp.name" . }}
+    helm.sh/chart: {{ include "showks-webapp.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: {{ include "showks-webapp.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
