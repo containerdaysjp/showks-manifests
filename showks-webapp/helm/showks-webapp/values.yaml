@@ -11,7 +11,6 @@ replicaCount: 1
 
 image:
   repository: containerdaysjp/showks-webapp
-  tag: jyoshise-test
   pullPolicy: IfNotPresent
   containerPort: 8080
 
