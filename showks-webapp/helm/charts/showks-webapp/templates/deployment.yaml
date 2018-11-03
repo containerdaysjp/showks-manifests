@@ -1,9 +1,9 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: {{ include "showks-webapp.fullname" . }}
+  name: showks-webapp-{{ .Values.userInfo.userName }}
   labels:
-    app.kubernetes.io/name: {{ include "showks-webapp.name" . }}
+    app.kubernetes.io/name: showks-webapp-{{ .Values.userInfo.userName }}
     helm.sh/chart: {{ include "showks-webapp.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
@@ -11,30 +11,30 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "showks-webapp.name" . }}
+      app.kubernetes.io/name: showks-webapp-{{ .Values.userInfo.userName }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "showks-webapp.name" . }}
+        app.kubernetes.io/name: showks-webapp-{{ .Values.userInfo.userName }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.userInfo.userName }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 80
+              containerPort: {{ .Values.image.containerPort }}
               protocol: TCP
           livenessProbe:
             httpGet:
               path: /
-              port: http
+              port: {{ .Values.image.containerPort }}
           readinessProbe:
             httpGet:
               path: /
-              port: http
+              port: {{ .Values.image.containerPort }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- with .Values.nodeSelector }}

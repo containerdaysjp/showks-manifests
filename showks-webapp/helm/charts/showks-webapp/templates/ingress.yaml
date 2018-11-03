@@ -4,9 +4,9 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ $fullName }}
+  name: showks-webapp-{{ .Values.userInfo.userName }}
   labels:
-    app.kubernetes.io/name: {{ include "showks-webapp.name" . }}
+    app.kubernetes.io/name: showks-webapp-{{ .Values.userInfo.userName }}
     helm.sh/chart: {{ include "showks-webapp.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
@@ -33,6 +33,6 @@ spec:
           - path: {{ $ingressPath }}
             backend:
               serviceName: {{ $fullName }}
-              servicePort: http
+              servicePort: {{ .Values.image.containerPort }}
   {{- end }}
 {{- end }}
