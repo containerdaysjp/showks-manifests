@@ -12,17 +12,17 @@ replicaCount: 1
 image:
   repository: containerdaysjp/showks-webapp
   pullPolicy: IfNotPresent
-  containerPort: 8080
+  containerPort: "8080"
 
 nameOverride: ""
 fullnameOverride: ""
 
 service:
   type: NodePort
-  port: 8080
+  port: "8080"
 
 ingress:
-  enabled: true
+  enabled: false
   annotations: {
     nginx.ingress.kubernetes.io/rewrite-target: /
     }
