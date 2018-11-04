@@ -24,21 +24,3 @@ spec:
         image: containerdaysjp/showks-portal
         ports:
         - containerPort: 3000
-
----
-
-kind: Service
-apiVersion: v1
-metadata:
-  name: showks-portal
-  namespace: showks-portal
-spec:
-  selector:
-    source: test
-    app: spinnaker
-  ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3000
-  type: LoadBalancer
-  
