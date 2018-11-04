@@ -8,7 +8,7 @@ metadata:
     stack: portal
     app: showks-portal
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       source: test
