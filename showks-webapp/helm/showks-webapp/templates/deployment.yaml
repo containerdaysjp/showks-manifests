@@ -2,6 +2,7 @@ apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
   name: showks-webapp-{{ .Values.userInfo.userName }}
+  namespace: {{ .Values.namespace }}
   labels:
     app.kubernetes.io/name: showks-webapp-{{ .Values.userInfo.userName }}
     helm.sh/chart: {{ include "showks-webapp.chart" . }}
