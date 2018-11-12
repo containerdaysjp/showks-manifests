@@ -1,0 +1,24 @@
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: {{ .Chart.Name }}-access
+  namespace: showks
+rules:
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "watch", "list"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  name: {{ .Chart.Name }}-access-binding
+  namespace: showks
+subjects:
+  - kind: ServiceAccount
+    name: default
+roleRef:
+  kind: Role
+  name: {{ .Chart.Name }}-access
+  apiGroup: rbac.authorization.k8s.io
