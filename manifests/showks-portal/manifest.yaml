@@ -1,0 +1,44 @@
+---
+# Source: showks-portal/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: showks-portal
+  labels:
+    app: showks-portal
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+      name: app-port
+  selector:
+    app: showks-portal
+
+---
+# Source: showks-portal/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: showks-portal
+  labels:
+    app: showks-portal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: showks-portal
+  template:
+    metadata:
+      labels:
+        app: showks-portal
+    spec:
+      containers:
+        - name: showks-portal
+          image: containerdaysjp/showks-portal:stg-bf19f3d1770efe71b82d52d7c1a94b02fa1563c0
+          ports:
+            - name: app-port
+              containerPort: 8080
+              protocol: TCP
+
