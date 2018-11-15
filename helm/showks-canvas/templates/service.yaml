@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ .Chart.Name }}-{{ .Values.userID }}
   labels:
-    app: {{ .Chart.Name }}-{{ .Values.userID }}
+    app: {{ .Chart.Name }}
 spec:
   type: ClusterIP
   ports:
@@ -12,5 +12,5 @@ spec:
       protocol: TCP
       name: app-port
   selector:
-    app: {{ .Chart.Name }}-{{ .Values.userID }}
+    app: {{ .Chart.Name }}
 
