@@ -52,7 +52,7 @@ metadata:
   labels:
     app: showks-aggregator
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: showks-aggregator
@@ -68,4 +68,3 @@ spec:
             - name: app-port
               containerPort: 8080
               protocol: TCP
-
