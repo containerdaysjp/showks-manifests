@@ -19,5 +19,5 @@ spec:
           image: containerdaysjp/{{ .Chart.Name }}:{{ .Values.image.tag }}
           ports:
             - name: app-port
-              containerPort: 8080
+              containerPort: 3000
               protocol: TCP
