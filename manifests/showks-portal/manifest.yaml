@@ -25,7 +25,7 @@ metadata:
   labels:
     app: showks-portal
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: showks-portal
@@ -36,8 +36,9 @@ spec:
     spec:
       containers:
         - name: showks-portal
-          image: containerdaysjp/showks-portal:prod-bd416b90a0d3bb9bbcb586ab8d16c2678ea5aa6b
+          image: containerdaysjp/showks-portal:prod-8a81d5191c769f50e2d87a39037e07d8567059dd
           ports:
             - name: app-port
               containerPort: 8080
               protocol: TCP
+
