@@ -4,13 +4,14 @@ apiVersion: v1
 kind: Service
 metadata:
   name: showks-portal
+  namespace: showks
   labels:
     app: showks-portal
 spec:
   type: ClusterIP
   ports:
-    - port: 8080
-      targetPort: 8080
+    - port: 3000
+      targetPort: 3000
       protocol: TCP
       name: app-port
   selector:
@@ -22,6 +23,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: showks-portal
+  namespace: showks
   labels:
     app: showks-portal
 spec:
@@ -36,9 +38,28 @@ spec:
     spec:
       containers:
         - name: showks-portal
-          image: containerdaysjp/showks-portal:stg-92a68ccca5734ccfaff1cdfead26274b87ab81f5
+          image: containerdaysjp/showks-portal:stg-6de17ac4dd8eb562a6e09b16c8ec82e82ae207f2
           ports:
             - name: app-port
-              containerPort: 8080
+              containerPort: 3000
               protocol: TCP
+
+---
+# Source: showks-portal/templates/ingress.yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: showks-portal
+  namespace: showks
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: portal.stg.showks.containerdays.jp
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: showks-portal
+          servicePort: 3000
 
