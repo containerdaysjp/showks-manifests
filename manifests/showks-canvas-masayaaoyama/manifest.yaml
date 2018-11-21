@@ -1,0 +1,45 @@
+---
+# Source: showks-canvas/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: showks-canvas-userid
+  labels:
+    app: showks-canvas
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+      name: app-port
+  selector:
+    app: showks-canvas
+
+
+---
+# Source: showks-canvas/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: showks-canvas-userid
+  labels:
+    app: showks-canvas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: showks-canvas
+  template:
+    metadata:
+      labels:
+        app: showks-canvas
+    spec:
+      containers:
+        - name: showks-canvas-userid
+          image: containerdaysjp/showks-canvas-userid:stg-94c2f9041c978598213adf298048076c859e4f15
+          ports:
+            - name: app-port
+              containerPort: 8080
+              protocol: TCP
+
