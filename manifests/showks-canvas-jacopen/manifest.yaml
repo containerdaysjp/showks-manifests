@@ -4,6 +4,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: showks-canvas-userid
+  namespace: showks
   labels:
     app: showks-canvas
 spec:
@@ -23,6 +24,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: showks-canvas-userid
+  namespace: showks
   labels:
     app: showks-canvas
 spec:
@@ -37,7 +39,7 @@ spec:
     spec:
       containers:
         - name: showks-canvas-userid
-          image: containerdaysjp/showks-canvas-userid:stg-04972611243aef7da6a81d074133bc15a999d3ca
+          image: containerdaysjp/showks-canvas-userid:stg-b8938825245da8a7df300c2f1463dfff6d9c3639
           ports:
             - name: app-port
               containerPort: 8080
