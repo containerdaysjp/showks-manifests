@@ -187,14 +187,19 @@ spec:
         prometheus.io/scrape: "true"
     spec:
       serviceAccountName: nginx-ingress-serviceaccount
+      volumes:
+        - name: tls-dhparam-vol
+          secret:
+            secretName: tls-dhparam
       containers:
         - name: nginx-ingress-controller
-          image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.20.0
+          image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.21.0
           args:
             - /nginx-ingress-controller
             - --configmap=$(POD_NAMESPACE)/nginx-configuration
             - --publish-service=$(POD_NAMESPACE)/ingress-nginx
             - --annotations-prefix=nginx.ingress.kubernetes.io
+            - "--default-ssl-certificate=$(POD_NAMESPACE)/tls-certificate"
           securityContext:
             capabilities:
               drop:
@@ -217,6 +222,9 @@ spec:
               containerPort: 80
             - name: https
               containerPort: 443
+          volumeMounts:
+            - mountPath: /etc/nginx-ssl/dhparam
+              name: tls-dhparam-vol
           livenessProbe:
             failureThreshold: 3
             httpGet:
