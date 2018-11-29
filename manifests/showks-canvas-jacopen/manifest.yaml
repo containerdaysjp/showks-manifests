@@ -39,7 +39,7 @@ spec:
     spec:
       containers:
         - name: showks-canvas-
-          image: containerdaysjp/showks-canvas-:stg-c916c589695d6a564eb117b9ab50d14f4b8a8e3a
+          image: containerdaysjp/showks-canvas-:stg-c12a69405f4a55d69216f6e509bca555bf3173a3
           ports:
             - name: app-port
               containerPort: 8080
